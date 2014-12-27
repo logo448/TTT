@@ -24,7 +24,16 @@ namespace TTT
 
         private void get_pieces()
         {
-
+            if (get_piece._user_first)
+            {
+                this.human = "X";
+                this.computer = "O";
+            }
+            else
+            {
+                this.human = "O";
+                this.computer = "X";
+            }
         }
     }
 
