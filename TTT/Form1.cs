@@ -24,9 +24,58 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            #region testing
             board board1 = new board();
-            board1.blank_board();
-            
+            #endregion
+            #region get location
+            int pos = 0;
+
+            if (radioButton1.Checked)
+            {
+                pos = 0;
+            }
+
+            if (radioButton2.Checked)
+            {
+                pos = 2;
+            }
+
+            if (radioButton3.Checked)
+            {
+                pos = 6;
+            }
+
+            if (radioButton4.Checked)
+            {
+                pos = 8;
+            }
+
+            if (radioButton5.Checked)
+            {
+                pos = 3;
+            }
+
+            if (radioButton6.Checked)
+            {
+                pos = 5;
+            }
+
+            if (radioButton7.Checked)
+            {
+                pos = 4;
+            }
+
+            if (radioButton8.Checked)
+            {
+                pos = 1;
+            }
+
+            if (radioButton9.Checked)
+            {
+                pos = 7;
+            }
+            MessageBox.Show(pos.ToString());
+            #endregion
         }
     }
 
