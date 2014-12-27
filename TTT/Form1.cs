@@ -25,7 +25,8 @@ namespace TTT
         private void button1_Click(object sender, EventArgs e)
         {
             board board1 = new board();
-            board1.get_pieces();
+            board1.blank_board();
+            
         }
     }
 
@@ -38,11 +39,14 @@ namespace TTT
         get_piece get_piece1 = new get_piece();
 
         // a list that represents the board
-        private List<int> board_array = new List<int>();
+        private List<string> board_array = new List<string>();
 
         // variables that will represent of the human and computer are X or O
         private string human;
         private string computer;
+
+        // a variable that represents if it's x or o's turn
+        private string turn = "X";
 
         public void get_pieces()
         {
@@ -65,6 +69,28 @@ namespace TTT
                 this.human = "O";
                 this.computer = "X";
             }
+        }
+
+        public void next_turn()
+        {
+            // if it was X's turn
+            if (turn == "X")
+            {
+                // switch to O's turn
+                turn = "O";
+            }
+
+            // if it was O's turn
+            else
+            {
+                // switch to X's turn
+                turn = "X";
+            }
+        }
+
+        public void blank_board()
+        {
+            board_array.AddRange(new string[9] { "", "", "", "", "", "", "", "", "" });
         }
     }
 }
