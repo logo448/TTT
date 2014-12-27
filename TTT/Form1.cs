@@ -10,6 +10,25 @@ using System.Windows.Forms;
 
 namespace TTT
 {
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        /// <summary>
+        /// function that triggers when done button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            board board1 = new board();
+            board1.get_pieces();
+        }
+    }
+
     /// <summary>
     /// a class that is the tic tac toe board
     /// </summary>
@@ -27,39 +46,25 @@ namespace TTT
 
         public void get_pieces()
         {
+            // shows the form that asks the user if they want to go first
+            // waits for form to be closed as well
             get_piece1.ShowDialog();
-
+            
+            // checks to see if the user is first
             if (get_piece._user_first)
             {
+                // set prices accordingly
                 this.human = "X";
                 this.computer = "O";
-                MessageBox.Show(human);
             }
+
+            // if human differed
             else
             {
+                // set prices accordingly
                 this.human = "O";
                 this.computer = "X";
-                MessageBox.Show(human);
             }
-        }
-    }
-
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// function that triggers when done button is pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
-        {
-            board board1 = new board();
-            board1.get_pieces();
         }
     }
 }
