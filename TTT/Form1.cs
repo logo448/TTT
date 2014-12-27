@@ -15,6 +15,9 @@ namespace TTT
     /// </summary>
     public class board
     {
+        // create a new get_piece form object
+        get_piece get_piece1 = new get_piece();
+
         // a list that represents the board
         private List<int> board_array = new List<int>();
 
@@ -22,17 +25,21 @@ namespace TTT
         private string human;
         private string computer;
 
-        private void get_pieces()
+        public void get_pieces()
         {
+            get_piece1.ShowDialog();
+
             if (get_piece._user_first)
             {
                 this.human = "X";
                 this.computer = "O";
+                MessageBox.Show(human);
             }
             else
             {
                 this.human = "O";
                 this.computer = "X";
+                MessageBox.Show(human);
             }
         }
     }
@@ -51,7 +58,8 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-
+            board board1 = new board();
+            board1.get_pieces();
         }
     }
 }

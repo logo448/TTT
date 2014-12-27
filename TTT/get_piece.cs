@@ -23,10 +23,8 @@ namespace TTT
         /// <summary>
         /// function that triggers everytime the done button is pressed
         /// main purpose to check if user wants to go first
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button1_Click(object sender, EventArgs e)
+
+        private void get_piece_FormClosed(object sender, FormClosedEventArgs e)
         {
             // check to see if the user pressed the yes radio button
             if (radioButton1.Checked)
