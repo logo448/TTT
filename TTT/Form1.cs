@@ -27,9 +27,13 @@ namespace TTT
             #region testing
             board board1 = new board();
             #endregion
+
             #region get location
+            // integer variable that represents which radiobutton the user selected
             int pos = 0;
 
+            // section that checks all nine radiobuttons to see
+            // which radiobutton is selected and then assigns pos to the appropriate value
             if (radioButton1.Checked)
             {
                 pos = 0;
@@ -74,7 +78,6 @@ namespace TTT
             {
                 pos = 7;
             }
-            MessageBox.Show(pos.ToString());
             #endregion
         }
     }
