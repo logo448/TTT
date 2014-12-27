@@ -10,6 +10,24 @@ using System.Windows.Forms;
 
 namespace TTT
 {
+    /// <summary>
+    /// a class that is the tic tac toe board
+    /// </summary>
+    public class board
+    {
+        // a list that represents the board
+        private List<int> board_array = new List<int>();
+
+        // variables that will represent of the human and computer are X or O
+        private string human;
+        private string computer;
+
+        private void get_pieces()
+        {
+
+        }
+    }
+
     public partial class Form1 : Form
     {
         public Form1()
