@@ -37,6 +37,7 @@
             this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.radioButton9 = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // radioButton1
@@ -129,11 +130,22 @@
             this.radioButton9.TabStop = true;
             this.radioButton9.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(13, 125);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(135, 36);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Done";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(160, 131);
+            this.ClientSize = new System.Drawing.Size(160, 166);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.radioButton9);
             this.Controls.Add(this.radioButton8);
             this.Controls.Add(this.radioButton7);
@@ -161,6 +173,7 @@
         private System.Windows.Forms.RadioButton radioButton7;
         private System.Windows.Forms.RadioButton radioButton8;
         private System.Windows.Forms.RadioButton radioButton9;
+        private System.Windows.Forms.Button button1;
     }
 }
 
