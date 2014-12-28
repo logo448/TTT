@@ -12,6 +12,7 @@ namespace TTT
 {
     public partial class Form1 : Form
     {
+        board board1 = new board();
         public Form1()
         {
             InitializeComponent();
@@ -24,8 +25,7 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            #region testing
-            board board1 = new board();
+            #region testing            
             #endregion
 
             #region get location
@@ -79,6 +79,7 @@ namespace TTT
                 pos = 7;
             }
             #endregion
+
         }
     }
 
@@ -98,7 +99,16 @@ namespace TTT
         private string computer;
 
         // a variable that represents if it's x or o's turn
-        private string turn = "X";
+        private string turn;
+
+        /// <summary>
+        /// runs on creation of object
+        /// </summary>
+        public board()
+        {
+            this.turn = "X";
+            this.blank_board();
+        }
 
         public void get_pieces()
         {
@@ -126,23 +136,36 @@ namespace TTT
         public void next_turn()
         {
             // if it was X's turn
-            if (turn == "X")
+            if (this.turn == "X")
             {
                 // switch to O's turn
-                turn = "O";
+                this.turn = "O";
             }
 
             // if it was O's turn
             else
             {
                 // switch to X's turn
-                turn = "X";
+                this.turn = "X";
             }
         }
 
         public void blank_board()
         {
             board_array.AddRange(new string[9] { "", "", "", "", "", "", "", "", "" });
+        }
+
+        /// <summary>
+        /// function to mark the move passed to the function on
+        /// the board
+        /// </summary>
+        /// <param name="move"></param>
+        public void mark_move(int move)
+        {
+            // sets the value of the nth element of the board to
+            // either x or o depending on who's turn it is. N is
+            // equal to the move passed to the method.
+            this.board_array[move] = turn;
         }
     }
 }
