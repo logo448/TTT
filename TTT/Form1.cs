@@ -25,10 +25,7 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            #region testing            
-            #endregion
-
-            #region get location
+            #region get location and do stuff
             // integer variable that represents which radiobutton the user selected
             int pos = 0;
 
@@ -37,63 +34,90 @@ namespace TTT
             if (radioButton1.Checked)
             {
                 pos = 0;
+
+                // make radio button dissapear
                 radioButton1.Visible = false;
+                // set the text of the label to the current players symbol
                 label1.Text = board1.turn;
             }
 
             if (radioButton2.Checked)
             {
                 pos = 2;
+
+                // make radio button dissapear
                 radioButton2.Visible = false;
+                // set the text of the label to the current players symbol
                 label3.Text = board1.turn;
             }
 
             if (radioButton3.Checked)
             {
                 pos = 6;
+
+                // make radio button dissapear
                 radioButton3.Visible = false;
+                // set the text of the label to the current players symbol
                 label7.Text = board1.turn;
             }
 
             if (radioButton4.Checked)
             {
                 pos = 8;
+
+                // make radio button dissapear
                 radioButton4.Visible = false;
+                // set the text of the label to the current players symbol
                 label9.Text = board1.turn;
             }
 
             if (radioButton5.Checked)
             {
                 pos = 3;
+
+                // make radio button dissapear
                 radioButton5.Visible = false;
+                // set the text of the label to the current players symbol
                 label4.Text = board1.turn;
             }
 
             if (radioButton6.Checked)
             {
                 pos = 5;
+
+                // make radio button dissapear
                 radioButton6.Visible = false;
+                // set the text of the label to the current players symbol
                 label6.Text = board1.turn;
             }
 
             if (radioButton7.Checked)
             {
                 pos = 4;
+
+                // make radio button dissapear
                 radioButton7.Visible = false;
+                // set the text of the label to the current players symbol
                 label5.Text = board1.turn;
             }
 
             if (radioButton8.Checked)
             {
                 pos = 1;
+
+                // make radio button dissapear
                 radioButton8.Visible = false;
+                // set the text of the label to the current players symbol
                 label2.Text = board1.turn;
             }
 
             if (radioButton9.Checked)
             {
                 pos = 7;
+
+                // make radio button dissapear
                 radioButton9.Visible = false;
+                // set the text of the label to the current players symbol
                 label8.Text = board1.turn;
             }
             #endregion
