@@ -37,49 +37,66 @@ namespace TTT
             if (radioButton1.Checked)
             {
                 pos = 0;
+                radioButton1.Visible = false;
+                label1.Text = board1.turn;
             }
 
             if (radioButton2.Checked)
             {
                 pos = 2;
+                radioButton2.Visible = false;
+                label3.Text = board1.turn;
             }
 
             if (radioButton3.Checked)
             {
                 pos = 6;
+                radioButton3.Visible = false;
+                label7.Text = board1.turn;
             }
 
             if (radioButton4.Checked)
             {
                 pos = 8;
+                radioButton4.Visible = false;
+                label9.Text = board1.turn;
             }
 
             if (radioButton5.Checked)
             {
                 pos = 3;
+                radioButton5.Visible = false;
+                label4.Text = board1.turn;
             }
 
             if (radioButton6.Checked)
             {
                 pos = 5;
+                radioButton6.Visible = false;
+                label6.Text = board1.turn;
             }
 
             if (radioButton7.Checked)
             {
                 pos = 4;
+                radioButton7.Visible = false;
+                label5.Text = board1.turn;
             }
 
             if (radioButton8.Checked)
             {
                 pos = 1;
+                radioButton8.Visible = false;
+                label2.Text = board1.turn;
             }
 
             if (radioButton9.Checked)
             {
                 pos = 7;
+                radioButton9.Visible = false;
+                label8.Text = board1.turn;
             }
             #endregion
-
         }
     }
 
@@ -99,7 +116,7 @@ namespace TTT
         private string computer;
 
         // a variable that represents if it's x or o's turn
-        private string turn;
+        public string turn;
 
         /// <summary>
         /// runs on creation of object
