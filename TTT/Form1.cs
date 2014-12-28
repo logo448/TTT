@@ -159,34 +159,7 @@ namespace TTT
         {
             this.turn = "X";
             this.blank_board();
-        }
-
-        /// <summary>
-        /// function that sets human and computer to either x or o
-        /// depending on if the user is going first
-        /// </summary>
-        public void get_pieces()
-        {
-            // shows the form that asks the user if they want to go first
-            // waits for form to be closed as well
-            get_piece1.ShowDialog();
-            
-            // checks to see if the user is first
-            if (get_piece._user_first)
-            {
-                // set prices accordingly
-                this.human = "X";
-                this.computer = "O";
-            }
-
-            // if human differed
-            else
-            {
-                // set prices accordingly
-                this.human = "O";
-                this.computer = "X";
-            }
-        }
+        }       
 
         /// <summary>
         /// function that switches the turn from x to o or o to x
