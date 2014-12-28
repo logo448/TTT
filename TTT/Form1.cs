@@ -25,6 +25,7 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            board1.get_legal_moves();
             #region get location and do stuff
             // integer variable that represents which radiobutton the user selected
             int pos = 0;
@@ -121,6 +122,8 @@ namespace TTT
                 label8.Text = board1.turn;
             }
             #endregion
+            board1.mark_move(pos);
+            board1.next_turn();
         }
     }
 
@@ -133,14 +136,17 @@ namespace TTT
         get_piece get_piece1 = new get_piece();
 
         // a list that represents the board
-        private List<string> board_array = new List<string>();
+        public List<string> board_array = new List<string>();
 
         // variables that will represent of the human and computer are X or O
-        private string human;
-        private string computer;
+        public string human;
+        public string computer;
 
         // a variable that represents if it's x or o's turn
         public string turn;
+
+        // a variable that holds the legal moves
+        public List<int> legal_moves;
 
         /// <summary>
         /// runs on creation of object
@@ -151,6 +157,10 @@ namespace TTT
             this.blank_board();
         }
 
+        /// <summary>
+        /// function that sets human and computer to either x or o
+        /// depending on if the user is going first
+        /// </summary>
         public void get_pieces()
         {
             // shows the form that asks the user if they want to go first
@@ -174,6 +184,9 @@ namespace TTT
             }
         }
 
+        /// <summary>
+        /// function that switches the turn from x to o or o to x
+        /// </summary>
         public void next_turn()
         {
             // if it was X's turn
@@ -191,6 +204,9 @@ namespace TTT
             }
         }
 
+        /// <summary>
+        /// function that clears the board
+        /// </summary>
         public void blank_board()
         {
             board_array.AddRange(new string[9] { "", "", "", "", "", "", "", "", "" });
@@ -207,6 +223,32 @@ namespace TTT
             // either x or o depending on who's turn it is. N is
             // equal to the move passed to the method.
             this.board_array[move] = turn;
+        }
+
+        /// <summary>
+        /// function that gets all legal moves and stores them in
+        /// the legal moves list
+        /// </summary>
+        public void get_legal_moves()
+        {
+            // reset the legal_moves
+            this.legal_moves = new List<int>();
+
+            // counter variable
+            int n = 0;
+
+            // loops through each position on the board
+            foreach (string pos in board_array)
+            {
+                // if the pos is empty
+                if (pos == "")
+                {
+                    // the space is legal
+                    this.legal_moves.Add(n);
+                }
+                // increment counter variable
+                n++;
+            }
         }
     }
 }
