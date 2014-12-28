@@ -124,8 +124,77 @@ namespace TTT
             }
             #endregion
             board1.mark_move(pos);
-            board1.check_for_win();
+            string winner = board1.check_for_win();
+            if (winner != null)
+            {
+                MessageBox.Show(string.Format("{0}, won", winner));
+                board1.blank_board();
+                blank_labels();
+                view_radiobuttons();
+                winner = null;
+            }
             board1.next_turn();
+        }
+
+        public void blank_labels()
+        {
+            label1.Text = "";
+            label2.Text = "";
+            label3.Text = "";
+            label4.Text = "";
+            label5.Text = "";
+            label6.Text = "";
+            label7.Text = "";
+            label8.Text = "";
+            label9.Text = "";
+        }
+
+        public void view_radiobuttons()
+        {
+            if (!radioButton1.Visible)
+            {
+                radioButton1.Visible = true;
+            }
+
+            if (!radioButton2.Visible)
+            {
+                radioButton2.Visible = true;
+            }
+
+            if (!radioButton3.Visible)
+            {
+                radioButton3.Visible = true;
+            }
+
+            if (!radioButton4.Visible)
+            {
+                radioButton4.Visible = true;
+            }
+
+            if (!radioButton5.Visible)
+            {
+                radioButton5.Visible = true;
+            }
+
+            if (!radioButton6.Visible)
+            {
+                radioButton6.Visible = true;
+            }
+
+            if (!radioButton7.Visible)
+            {
+                radioButton7.Visible = true;
+            }
+
+            if (!radioButton8.Visible)
+            {
+                radioButton8.Visible = true;
+            }
+
+            if (!radioButton9.Visible)
+            {
+                radioButton9.Visible = true;
+            }
         }
     }
 
