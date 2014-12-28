@@ -24,8 +24,7 @@ namespace TTT
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
-        {
-            board1.get_legal_moves();
+        {           
             #region get location and do stuff
             // integer variable that represents which radiobutton the user selected
             int pos = 0;
@@ -123,6 +122,7 @@ namespace TTT
             }
             #endregion
             board1.mark_move(pos);
+            board1.check_for_win();
             board1.next_turn();
         }
     }
@@ -147,6 +147,10 @@ namespace TTT
 
         // a variable that holds the legal moves
         public List<int> legal_moves;
+
+        public List<int> x_moves;
+
+        public List<int> o_moves;
 
         /// <summary>
         /// runs on creation of object
@@ -249,6 +253,91 @@ namespace TTT
                 // increment counter variable
                 n++;
             }
+        }
+
+        /// <summary>
+        /// function to get the moves x and o have made and store
+        /// them in a list
+        /// </summary>
+        public void get_xO_moves()
+        {
+            // reset's x and o moves
+            this.o_moves = new List<int>();
+            this.x_moves = new List<int>();
+
+            // counter variable used to get current position in loop
+            int n = 0;
+
+            // loop through every board position
+            foreach (string pos in board_array)
+            {
+                // if position is marked by x
+                if (pos == "X")
+                {
+                    // add position to x move list
+                    x_moves.Add(n);
+                }
+
+                // if position is marked by o
+                if (pos == "O")
+                {
+                    // add the position to the o move list
+                    o_moves.Add(n);
+                }
+                // icrement counter variable
+                n++;
+            }
+        }
+
+        /// <summary>
+        /// function that checks to see if their is a winning patter
+        /// on the board
+        /// </summary>
+        /// <returns>
+        /// returns either null, x, or o
+        /// </returns>
+        public string check_for_win()
+        {
+            // update x and o's moves
+            get_xO_moves();
+
+            // 2d array to hold the winning combos
+            int[,] winning_combos = new int[8, 3] {
+            {0, 1, 2},
+            {3, 4, 5},
+            {6, 7, 8},
+            {0, 3, 6},
+            {1, 4, 7},
+            {2, 5, 8},
+            {0, 4, 8},
+            {2, 4, 6}
+            };
+
+            // loop through the 1st layer of the combos
+            for (int i = 0; i < 8; i++)
+            {
+                // if x moves contains all three position in current
+                // wining combo row
+                if (x_moves.Contains(winning_combos[i,0]) 
+                    && x_moves.Contains(winning_combos[i,1])
+                    && x_moves.Contains(winning_combos[i, 2]))
+                {
+                    // return "X" as winner
+                    return "X";
+                }
+
+                // if o moves contains all three position in current
+                // wining combo row
+                if (o_moves.Contains(winning_combos[i, 0])
+                    && o_moves.Contains(winning_combos[i, 1])
+                    && o_moves.Contains(winning_combos[i, 2]))
+                {
+                    // return "O" as winner
+                    return "O";
+                }
+            }
+            // no winner
+            return null;
         }
     }
 }
