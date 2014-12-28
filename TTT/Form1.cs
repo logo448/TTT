@@ -12,14 +12,16 @@ namespace TTT
 {
     public partial class Form1 : Form
     {
+        // new global board object for testing
         board board1 = new board();
+
         public Form1()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// function that triggers when done button is pressed
+        /// function that triggers when button is pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -132,33 +134,28 @@ namespace TTT
     /// </summary>
     public class board
     {
-        // create a new get_piece form object
-        get_piece get_piece1 = new get_piece();
-
         // a list that represents the board
-        public List<string> board_array = new List<string>();
-
-        // variables that will represent of the human and computer are X or O
-        public string human;
-        public string computer;
+        private List<string> board_array = new List<string>();
 
         // a variable that represents if it's x or o's turn
         public string turn;
 
         // a variable that holds the legal moves
-        public List<int> legal_moves;
+        private List<int> legal_moves;
 
-        public List<int> x_moves;
+        // a variable that holds a list of all x's moves
+        private List<int> x_moves;
 
-        public List<int> o_moves;
+        // a variable that holds a list of all o's moves
+        private List<int> o_moves;
 
         /// <summary>
         /// runs on creation of object
         /// </summary>
         public board()
         {
-            this.turn = "X";
-            this.blank_board();
+            turn = "X";
+            blank_board();
         }       
 
         /// <summary>
@@ -167,17 +164,17 @@ namespace TTT
         public void next_turn()
         {
             // if it was X's turn
-            if (this.turn == "X")
+            if (turn == "X")
             {
                 // switch to O's turn
-                this.turn = "O";
+                turn = "O";
             }
 
             // if it was O's turn
             else
             {
                 // switch to X's turn
-                this.turn = "X";
+                turn = "X";
             }
         }
 
@@ -199,7 +196,7 @@ namespace TTT
             // sets the value of the nth element of the board to
             // either x or o depending on who's turn it is. N is
             // equal to the move passed to the method.
-            this.board_array[move] = turn;
+            board_array[move] = turn;
         }
 
         /// <summary>
@@ -209,7 +206,7 @@ namespace TTT
         public void get_legal_moves()
         {
             // reset the legal_moves
-            this.legal_moves = new List<int>();
+            legal_moves = new List<int>();
 
             // counter variable
             int n = 0;
@@ -221,7 +218,7 @@ namespace TTT
                 if (pos == "")
                 {
                     // the space is legal
-                    this.legal_moves.Add(n);
+                    legal_moves.Add(n);
                 }
                 // increment counter variable
                 n++;
@@ -235,8 +232,8 @@ namespace TTT
         public void get_xO_moves()
         {
             // reset's x and o moves
-            this.o_moves = new List<int>();
-            this.x_moves = new List<int>();
+            o_moves = new List<int>();
+            x_moves = new List<int>();
 
             // counter variable used to get current position in loop
             int n = 0;
