@@ -101,7 +101,7 @@ namespace TTT
         public int get_pos()
         {
             // integer variable that represents which radiobutton the user selected
-            int pos = 0;
+            int pos = -1;
 
             // section that checks all nine radiobuttons to see
             // which radiobutton is selected and then assigns pos to the appropriate value
@@ -226,7 +226,13 @@ namespace TTT
 
         public void pvp_play()
         {
-            board1.mark_move(get_pos());
+            int pos = get_pos();
+            if ( pos== -1)
+            {
+                MessageBox.Show("Please select a spot!");
+                return;
+            }
+            board1.mark_move(pos);
             if (board1.check_for_win() != null)
             {
                 if (board1.check_for_win() != "TIE")
