@@ -37,8 +37,12 @@ namespace TTT
             pvp_play();
         }
 
+        /// <summary>
+        /// sets all the labels bank to nothing
+        /// </summary>
         public void blank_labels()
         {
+            // set all the labels to ""
             label1.Text = "";
             label2.Text = "";
             label3.Text = "";
@@ -50,8 +54,13 @@ namespace TTT
             label9.Text = "";
         }
 
+        /// <summary>
+        /// function to make all the radiobuttons visible again
+        /// </summary>
         public void view_radiobuttons()
         {
+            // check each radio button to see if it isn't visible
+            // if button is invisible set it to visible
             if (!radioButton1.Visible)
             {
                 radioButton1.Visible = true;
@@ -98,6 +107,17 @@ namespace TTT
             }
         }
 
+        /// <summary>
+        /// function that checks each radiobutton to see if it is checked
+        /// and returns the corresponding position
+        /// 
+        /// function also sets selected button to invisible, unchecks the
+        /// radiobuttion and sets the label to either x or o depending
+        /// on the current players symbol
+        /// </summary>
+        /// <returns>
+        /// returns an int representing the position of the checked radiobutton
+        /// </returns>
         public int get_pos()
         {
             // integer variable that represents which radiobutton the user selected
@@ -224,30 +244,50 @@ namespace TTT
             return pos;
         }
 
+        /// <summary>
+        /// function that calls all the neccessary methods of board and 
+        /// form1 to play tic tac toe
+        /// </summary>
         public void pvp_play()
         {
+            // integer representing the position returned from get pos
             int pos = get_pos();
+
+            // if the position is -1 which means no radio button was 
+            // selected
             if ( pos== -1)
             {
+                // tell the user to select a radiobutton and then exit
                 MessageBox.Show("Please select a spot!");
                 return;
             }
+
+            // mark the position on the board represented by pos
             board1.mark_move(pos);
+
+            // check to see if the game is ended
             if (board1.check_for_win() != null)
             {
+                // check to see if it wasn't a tie
                 if (board1.check_for_win() != "TIE")
                 {
+                    // display a messagebox saying if x or o won
                     MessageBox.Show(string.Format("{0} won", board1.check_for_win()));
                 }
 
+                // it was a tie
                 else
                 {
+                    // display it was a tie
                     MessageBox.Show("It was a tie!");
                 }
+
+                // reset
                 board1.blank_board();
                 blank_labels();
                 view_radiobuttons();
             }
+            // advance to next turn
             board1.next_turn();
         }
     }
@@ -257,6 +297,7 @@ namespace TTT
     /// </summary>
     public class board
     {
+        #region member fields
         // a list that represents the board
         private List<string> board_array = new List<string>();
 
@@ -271,7 +312,9 @@ namespace TTT
 
         // a variable that holds a list of all o's moves
         private List<int> o_moves;
+        #endregion
 
+        #region methods
         /// <summary>
         /// runs on creation of object
         /// </summary>
@@ -445,5 +488,6 @@ namespace TTT
             // no winner
             return null;
         }
+        #endregion
     }
 }
