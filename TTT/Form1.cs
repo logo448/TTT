@@ -252,6 +252,7 @@ namespace TTT
         /// </summary>
         public void blank_board()
         {
+            board_array = new List<string>();
             board_array.AddRange(new string[9] { "", "", "", "", "", "", "", "", "" });
         }
 
