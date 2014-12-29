@@ -8,12 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Threading;
+
 namespace TTT
 {
     public partial class Form1 : Form
     {
         // new global board object for testing
         board board1 = new board();
+
+        // global bool switch to see if next turn button was clicked
+        static bool next_bool = false;
+
+        //private Thread Pvp_play;
 
         public Form1()
         {
@@ -26,114 +33,8 @@ namespace TTT
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
-        {           
-            #region get location and do stuff
-            // integer variable that represents which radiobutton the user selected
-            int pos = 0;
-
-            // section that checks all nine radiobuttons to see
-            // which radiobutton is selected and then assigns pos to the appropriate value
-            if (radioButton1.Checked)
-            {
-                pos = 0;
-
-                // make radio button dissapear
-                radioButton1.Visible = false;
-                // set the text of the label to the current players symbol
-                label1.Text = board1.turn;
-            }
-
-            if (radioButton2.Checked)
-            {
-                pos = 2;
-
-                // make radio button dissapear
-                radioButton2.Visible = false;
-                // set the text of the label to the current players symbol
-                label3.Text = board1.turn;
-            }
-
-            if (radioButton3.Checked)
-            {
-                pos = 6;
-
-                // make radio button dissapear
-                radioButton3.Visible = false;
-                // set the text of the label to the current players symbol
-                label7.Text = board1.turn;
-            }
-
-            if (radioButton4.Checked)
-            {
-                pos = 8;
-
-                // make radio button dissapear
-                radioButton4.Visible = false;
-                // set the text of the label to the current players symbol
-                label9.Text = board1.turn;
-            }
-
-            if (radioButton5.Checked)
-            {
-                pos = 3;
-
-                // make radio button dissapear
-                radioButton5.Visible = false;
-                // set the text of the label to the current players symbol
-                label4.Text = board1.turn;
-            }
-
-            if (radioButton6.Checked)
-            {
-                pos = 5;
-
-                // make radio button dissapear
-                radioButton6.Visible = false;
-                // set the text of the label to the current players symbol
-                label6.Text = board1.turn;
-            }
-
-            if (radioButton7.Checked)
-            {
-                pos = 4;
-
-                // make radio button dissapear
-                radioButton7.Visible = false;
-                // set the text of the label to the current players symbol
-                label5.Text = board1.turn;
-            }
-
-            if (radioButton8.Checked)
-            {
-                pos = 1;
-
-                // make radio button dissapear
-                radioButton8.Visible = false;
-                // set the text of the label to the current players symbol
-                label2.Text = board1.turn;
-            }
-
-            if (radioButton9.Checked)
-            {
-                pos = 7;
-
-                // make radio button dissapear
-                radioButton9.Visible = false;
-                // set the text of the label to the current players symbol
-                label8.Text = board1.turn;
-            }
-            #endregion
-            board1.mark_move(pos);
-            string winner = board1.check_for_win();
-            if (winner != null)
-            {
-                MessageBox.Show(string.Format("{0}, won", winner));
-                board1.blank_board();
-                blank_labels();
-                view_radiobuttons();
-                winner = null;
-            }
-            board1.next_turn();
+        {
+            pvp_play();
         }
 
         public void blank_labels()
@@ -196,6 +97,164 @@ namespace TTT
                 radioButton9.Visible = true;
             }
         }
+
+        public int get_pos()
+        {
+            // integer variable that represents which radiobutton the user selected
+            int pos = 0;
+
+            // section that checks all nine radiobuttons to see
+            // which radiobutton is selected and then assigns pos to the appropriate value
+            if (radioButton1.Checked)
+            {
+                pos = 0;
+
+                // make radio button dissapear
+                radioButton1.Visible = false;
+                // uncheck the radiobutton
+                radioButton1.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label1.Text = board1.turn;
+            }
+
+            if (radioButton2.Checked)
+            {
+                pos = 2;
+
+                // make radio button dissapear
+                radioButton2.Visible = false;
+                // uncheck the radiobutton
+                radioButton2.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label3.Text = board1.turn;
+            }
+
+            if (radioButton3.Checked)
+            {
+                pos = 6;
+
+                // make radio button dissapear
+                radioButton3.Visible = false;
+                // uncheck the radiobutton
+                radioButton3.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label7.Text = board1.turn;
+            }
+
+            if (radioButton4.Checked)
+            {
+                pos = 8;
+
+                // make radio button dissapear
+                radioButton4.Visible = false;
+                // uncheck the radiobutton
+                radioButton4.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label9.Text = board1.turn;
+            }
+
+            if (radioButton5.Checked)
+            {
+                pos = 3;
+
+                // make radio button dissapear
+                radioButton5.Visible = false;
+                // uncheck the radiobutton
+                radioButton5.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label4.Text = board1.turn;
+            }
+
+            if (radioButton6.Checked)
+            {
+                pos = 5;
+
+                // make radio button dissapear
+                radioButton6.Visible = false;
+                // uncheck the radiobutton
+                radioButton6.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label6.Text = board1.turn;
+            }
+
+            if (radioButton7.Checked)
+            {
+                pos = 4;
+
+                // make radio button dissapear
+                radioButton7.Visible = false;
+                // uncheck the radiobutton
+                radioButton7.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label5.Text = board1.turn;
+            }
+
+            if (radioButton8.Checked)
+            {
+                pos = 1;
+
+                // make radio button dissapear
+                radioButton8.Visible = false;
+                // uncheck the radiobutton
+                radioButton8.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label2.Text = board1.turn;
+            }
+
+            if (radioButton9.Checked)
+            {
+                pos = 7;
+
+                // make radio button dissapear
+                radioButton9.Visible = false;
+                // uncheck the radiobutton
+                radioButton9.Checked = false;
+
+                // set the text of the label to the current players symbol
+                label8.Text = board1.turn;
+            }
+            return pos;
+        }
+
+        public void pvp_play()
+        {
+            board1.mark_move(get_pos());
+            if (board1.check_for_win() != null)
+            {
+                if (board1.check_for_win() != "TIE")
+                {
+                    MessageBox.Show(string.Format("{0} won", board1.check_for_win()));
+                }
+
+                else
+                {
+                    MessageBox.Show("It was a tie!");
+                }
+                board1.blank_board();
+                blank_labels();
+                view_radiobuttons();
+            }
+            board1.next_turn();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Thread Pvp_play = new Thread(new ThreadStart(pvp_play));
+            //Pvp_play.Start();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //Pvp_play.Abort();
+        }
     }
 
     /// <summary>
@@ -249,6 +308,8 @@ namespace TTT
 
         /// <summary>
         /// function that clears the board
+        /// alternate method:
+        /// I could loop through the first nine spost and set them to ""
         /// </summary>
         public void blank_board()
         {
