@@ -250,17 +250,6 @@ namespace TTT
             }
             board1.next_turn();
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //Thread Pvp_play = new Thread(new ThreadStart(pvp_play));
-            //Pvp_play.Start();
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            //Pvp_play.Abort();
-        }
     }
 
     /// <summary>
@@ -405,6 +394,9 @@ namespace TTT
         /// </returns>
         public string check_for_win()
         {
+            // get's updated legal moves list
+            get_legal_moves();
+
             // update x and o's moves
             get_xO_moves();
 
@@ -443,6 +435,13 @@ namespace TTT
                     return "O";
                 }
             }
+            
+            // check to see if their are any more legal moves
+            if (legal_moves.Count == 0)
+            {
+                return "TIE";
+            }
+
             // no winner
             return null;
         }
