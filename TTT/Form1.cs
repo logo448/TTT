@@ -14,6 +14,8 @@ namespace TTT
 {
     public partial class Form1 : Form
     {
+        // TODO
+        // list of lists holding TTT boards
         // new global board object for testing
         board board1 = new board();
 
@@ -489,5 +491,10 @@ namespace TTT
             return null;
         }
         #endregion
+    }
+
+    public class ai_board : board
+    {
+        private List<List<int>> game_tree;
     }
 }
