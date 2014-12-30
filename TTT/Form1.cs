@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Threading;
+using GameTree;
 
 namespace TTT
 {
@@ -495,6 +496,6 @@ namespace TTT
 
     public class ai_board : board
     {
-        private List<List<int>> game_tree;
+        
     }
 }
