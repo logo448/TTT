@@ -19,10 +19,7 @@ namespace TTT
         // list of lists holding TTT boards
         // new global board object for testing
         board board1 = new board();     
-        
-
-        // global bool switch to see if next turn button was clicked
-        static bool next_bool = false;
+       
 
         //private Thread Pvp_play;
 
@@ -40,9 +37,10 @@ namespace TTT
         {
             
             //pvp_play();
+            board1.board_array = new List<int>() { 2, 2, 0, 2, 1, 1, 0, 0, 1 };
             board1.generate_game_tree();
 
-            var val = board1.checkout_game_tree_node(0);
+            var val = board1.checkout_game_tree_node(8);
             foreach (int pos in val[3])
             {
                 MessageBox.Show(pos.ToString());
@@ -311,7 +309,7 @@ namespace TTT
     {
         #region member fields
         // a list that represents the board
-        private List<int> board_array;
+        public List<int> board_array;
 
         // a variable that represents if it's x or o's turn
         public string turn;
@@ -335,7 +333,7 @@ namespace TTT
         /// <summary>
         /// runs on creation of object
         /// </summary>
-        public board(string nothing)
+        public board()
         {
             board_array = new List<int>();
             game_tree = new tree();
@@ -519,18 +517,19 @@ namespace TTT
 
         public void generate_game_tree()
         {
-            var cp_board_array_perm = board_array;
+            var cp_board_array_perm = new List<int>(board_array);
             var cp_num_turn = num_turn;
             var cp_turn = turn;
 
+            //List<List<int>> boards = new List<List<int>>();
             game_tree = new tree();
-            game_tree.create_root(board_array, -1);
+            game_tree.create_root(cp_board_array_perm, -1);
 
             while (true)
             {
+                
                 //cp = (board)this.MemberwiseClone();
-                //var cp_board_array = cp.board_array;
-
+                //var cp_board_array = new List<int>(board_array);               
                 get_legal_moves();
                 var val = game_tree.checkout_node(game_tree.current);
 
@@ -546,6 +545,7 @@ namespace TTT
                 {
                     game_tree.up();
                     board_array = game_tree.checkout_node(game_tree.current)[0];
+                    next_turn();
                     continue;
                 }
 
@@ -554,9 +554,15 @@ namespace TTT
                 {
                     if (!val[4].Contains(legal_moves[i]))
                     {
+                        //boards.Add(new List<int>());
+                        //foreach (int pos in board_array) 
+                        //{
+                        //    boards.Last().Add(pos);
+                        //}
                         val[4].Add(legal_moves[i]);
-                        mark_move(legal_moves[i]);
-                        game_tree.add_data(board_array, legal_moves[i]);
+                        //mark_move(legal_moves[i]);                       
+                        game_tree.add_data(legal_moves[i], num_turn);
+                        board_array = checkout_game_tree_node(game_tree.current)[0];
                         next_turn();
                         break;
                     }
@@ -566,6 +572,11 @@ namespace TTT
             board_array = cp_board_array_perm;
             num_turn = cp_num_turn;
             turn = cp_turn;
+        }
+
+        public List<List<int>> checkout_game_tree_node(int lookup)
+        {
+            return game_tree.checkout_node(lookup);
         }
         #endregion
     }
