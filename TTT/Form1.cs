@@ -18,7 +18,8 @@ namespace TTT
         // TODO
         // list of lists holding TTT boards
         // new global board object for testing
-        board board1 = new board();
+        board board1 = new board();     
+        
 
         // global bool switch to see if next turn button was clicked
         static bool next_bool = false;
@@ -37,7 +38,15 @@ namespace TTT
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            pvp_play();
+            
+            //pvp_play();
+            board1.generate_game_tree();
+
+            var val = board1.checkout_game_tree_node(0);
+            foreach (int pos in val[3])
+            {
+                MessageBox.Show(pos.ToString());
+            }
         }
 
         /// <summary>
@@ -302,10 +311,12 @@ namespace TTT
     {
         #region member fields
         // a list that represents the board
-        private List<string> board_array = new List<string>();
+        private List<int> board_array;
 
         // a variable that represents if it's x or o's turn
         public string turn;
+
+        private int num_turn;
 
         // a variable that holds the legal moves
         private List<int> legal_moves;
@@ -315,17 +326,27 @@ namespace TTT
 
         // a variable that holds a list of all o's moves
         private List<int> o_moves;
+
+        // create a new tree object to be a game_tree
+        private tree game_tree;
         #endregion
 
         #region methods
         /// <summary>
         /// runs on creation of object
         /// </summary>
-        public board()
+        public board(string nothing)
         {
+            board_array = new List<int>();
+            game_tree = new tree();
             turn = "X";
+            num_turn = 1;
+            x_moves = new List<int>();
+            o_moves = new List<int>();
+            legal_moves = new List<int>();
             blank_board();
-        }       
+        }
+
 
         /// <summary>
         /// function that switches the turn from x to o or o to x
@@ -337,6 +358,8 @@ namespace TTT
             {
                 // switch to O's turn
                 turn = "O";
+
+                num_turn = 2;
             }
 
             // if it was O's turn
@@ -344,6 +367,8 @@ namespace TTT
             {
                 // switch to X's turn
                 turn = "X";
+
+                num_turn = 1;
             }
         }
 
@@ -354,8 +379,8 @@ namespace TTT
         /// </summary>
         public void blank_board()
         {
-            board_array = new List<string>();
-            board_array.AddRange(new string[9] { "", "", "", "", "", "", "", "", "" });
+            board_array = new List<int>();
+            board_array.AddRange(new int[9] {  0, 0, 0, 0, 0, 0, 0, 0, 0 });
         }
 
         /// <summary>
@@ -368,7 +393,7 @@ namespace TTT
             // sets the value of the nth element of the board to
             // either x or o depending on who's turn it is. N is
             // equal to the move passed to the method.
-            board_array[move] = turn;
+            board_array[move] = num_turn;
         }
 
         /// <summary>
@@ -384,10 +409,10 @@ namespace TTT
             int n = 0;
 
             // loops through each position on the board
-            foreach (string pos in board_array)
+            foreach (int pos in board_array)
             {
                 // if the pos is empty
-                if (pos == "")
+                if (pos == 0)
                 {
                     // the space is legal
                     legal_moves.Add(n);
@@ -411,17 +436,17 @@ namespace TTT
             int n = 0;
 
             // loop through every board position
-            foreach (string pos in board_array)
+            foreach (int pos in board_array)
             {
                 // if position is marked by x
-                if (pos == "X")
+                if (pos == 1)
                 {
                     // add position to x move list
                     x_moves.Add(n);
                 }
 
                 // if position is marked by o
-                if (pos == "O")
+                if (pos == 2)
                 {
                     // add the position to the o move list
                     o_moves.Add(n);
@@ -491,11 +516,57 @@ namespace TTT
             // no winner
             return null;
         }
-        #endregion
-    }
 
-    public class ai_board : board
-    {
-        
+        public void generate_game_tree()
+        {
+            var cp_board_array_perm = board_array;
+            var cp_num_turn = num_turn;
+            var cp_turn = turn;
+
+            game_tree = new tree();
+            game_tree.create_root(board_array, -1);
+
+            while (true)
+            {
+                //cp = (board)this.MemberwiseClone();
+                //var cp_board_array = cp.board_array;
+
+                get_legal_moves();
+                var val = game_tree.checkout_node(game_tree.current);
+
+                // check to see if I tried to call the up method on
+                // root node
+                if (game_tree.root_up) { break; }
+
+                // check to see if I've explored all children or
+                // if the current node is a leaf node
+
+                if (legal_moves.Count == val[4].Count
+                    || check_for_win() != null)
+                {
+                    game_tree.up();
+                    board_array = game_tree.checkout_node(game_tree.current)[0];
+                    continue;
+                }
+
+                int i = 0;
+                while (true)
+                {
+                    if (!val[4].Contains(legal_moves[i]))
+                    {
+                        val[4].Add(legal_moves[i]);
+                        mark_move(legal_moves[i]);
+                        game_tree.add_data(board_array, legal_moves[i]);
+                        next_turn();
+                        break;
+                    }
+                    else { i++; }
+                }
+            }
+            board_array = cp_board_array_perm;
+            num_turn = cp_num_turn;
+            turn = cp_turn;
+        }
+        #endregion
     }
 }
