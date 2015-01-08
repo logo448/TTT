@@ -15,8 +15,6 @@ namespace TTT
 {
     public partial class Form1 : Form
     {
-        // TODO
-        // list of lists holding TTT boards
         // new global board object for testing
         board board1 = new board();     
        
@@ -37,10 +35,11 @@ namespace TTT
         {
             
             //pvp_play();
-            board1.board_array = new List<int>() { 2, 2, 0, 2, 1, 1, 0, 0, 1 };
-            board1.generate_game_tree();
+            //board1.board_array = new List<int>() { 2, 2, 0, 2, 1, 1, 0, 0, 1 };
+            board1.generate_game_tree();           
 
-            var val = board1.checkout_game_tree_node(8);
+            var val = board1.checkout_game_tree_node(0);
+            
             foreach (int pos in val[3])
             {
                 MessageBox.Show(pos.ToString());
@@ -517,39 +516,57 @@ namespace TTT
 
         public void generate_game_tree()
         {
+            // get copies of the board and whose turn it is.
             var cp_board_array_perm = new List<int>(board_array);
             var cp_num_turn = num_turn;
             var cp_turn = turn;
 
-            //List<List<int>> boards = new List<List<int>>();
+            // create a new tree object ad a game_tree
             game_tree = new tree();
+
+            // create the root of the game_tree with the
+            // with the copy of the original board so the root
+            // board doesn't adjust with the real board
             game_tree.create_root(cp_board_array_perm, -1);
 
+            // infinite loop
+            // generates the game tree
             while (true)
-            {
-                
-                //cp = (board)this.MemberwiseClone();
-                //var cp_board_array = new List<int>(board_array);               
+            {              
+                // updates the list of legal moves for the current
+                // board
                 get_legal_moves();
+
+                // get the data in the current node
                 var val = game_tree.checkout_node(game_tree.current);
 
-                // check to see if I tried to call the up method on
-                // root node
+                // check to see if the  up method was called on 
+                // the root node
+                // if so break the while loop
                 if (game_tree.root_up) { break; }
 
                 // check to see if I've explored all children or
                 // if the current node is a leaf node
-
                 if (legal_moves.Count == val[4].Count
                     || check_for_win() != null)
                 {
+                    // go up the tree one node
                     game_tree.up();
+
+                    // set the board to the board of the current node
                     board_array = game_tree.checkout_node(game_tree.current)[0];
+                    
+                    // revert to previous turn
                     next_turn();
+
+                    // stop this iteration of loop and skip to next iteration
                     continue;
                 }
 
+                // counter variable
                 int i = 0;
+
+                // infinite loop
                 while (true)
                 {
                     if (!val[4].Contains(legal_moves[i]))
@@ -572,6 +589,7 @@ namespace TTT
             board_array = cp_board_array_perm;
             num_turn = cp_num_turn;
             turn = cp_turn;
+            MessageBox.Show(game_tree.nodes.Count.ToString());
         }
 
         public List<List<int>> checkout_game_tree_node(int lookup)
